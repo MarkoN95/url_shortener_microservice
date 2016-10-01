@@ -1,0 +1,14 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "A url shortener that redirects to the original url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marko Nikic",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
