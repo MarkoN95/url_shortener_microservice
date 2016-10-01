@@ -1,6 +1,10 @@
 var logger = require("connect-logger");
 var errorHandler = require("errorhandler");
 var _static = require("serve-static");
+var favicon = require("express-favicon");
+var mongoClient = require("mongodb").mongoClient;
+
+var add_url = require("./app/db_operations/add-url.js");
 
 var path = require("path");
 var http = require("http");
@@ -13,7 +17,10 @@ if(app.get("env") === "development") {
   app.use(errorHandler());
 }
 
+app.use(favicon(path.join(__dirname + "public/favicon.ico")));
 app.use(_static(path.join(__dirname + "/public")));
+
+app.get("/new/:url(*)", add_url(mongoClient));
 
 var server = http.createServer(app).listen(process.env.PORT || 8080, (err) => {
   if(app.get("env") === "development") {
