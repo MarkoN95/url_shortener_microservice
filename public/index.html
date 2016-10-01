@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Url shortener ms</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1 class="header">API Basejump: URL Shortener Microservice</h1>
+    <blockquote>
+      <ul>1) I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</ul>
+      <ul>2) If I pass an invalid URL that doesn't follow the valid http://www.example.com format, the JSON response will contain an error instead.</ul>
+      <ul>3) When I visit that shortened URL, it will redirect me to my original link.</ul>
+    </blockquote>
+    <h3>Example URL Creation:</h3>
+    <code>http://www.myproject.com/new/http://urltobeshortened.com</code>
+    <code>http://www.myproject.com/new/http://urltobeshortened.com:8888</code>
+    <h3>Example Output:</h3>
+    <code>
+      {
+        original_url: http://www.google.com,
+        short_url: http://myproject.com/8570376
+      }
+    </code>
+    <h3>Example Usage:</h3>
+    <code>http://www.myproject.com/8570376</code>
+    <h3>Will Redirect to:</h3>
+    <code>http://www.google.com</code>
+  </div>
+</body>
+</html>
