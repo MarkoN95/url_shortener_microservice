@@ -9,6 +9,10 @@
   "author": "Marko Nikic",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "connect-logger": "^0.0.1",
+    "errorhandler": "^1.4.3",
+    "mongodb": "^2.2.10",
+    "serve-static": "^1.11.1"
   }
 }
