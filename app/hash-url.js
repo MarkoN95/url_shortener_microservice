@@ -1,6 +1,8 @@
 module.exports = function(url) {
   if(typeof url !== "string") {
-    return false;
+    return {
+      error: "typeof argument must be a string"
+    };
   }
   var hash = 0, char = 0;
   if(url.length === 0) {
