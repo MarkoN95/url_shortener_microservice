@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Marko Nikic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarkoN95/url_shortener_microservice.git"
+  }
   "license": "ISC",
   "dependencies": {
     "connect-logger": "^0.0.1",
