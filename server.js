@@ -6,8 +6,6 @@ var path = require("path");
 var http = require("http");
 
 var express = require("express");
-var mongodb = require("mongodb");
-
 var app = express();
 
 if(app.get("env") === "development") {
