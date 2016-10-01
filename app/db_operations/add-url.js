@@ -3,19 +3,19 @@ var mongodb = require("mongodb");
 var isValid = require("../validate-url.js");
 var hash = require("../hash-url.js");
 
+function negative_to_zero(str) {
+  var n = Number(str);
+  if(n < 0) {
+    return str.replace("-", "0");
+  }
+  return str;
+}
+
 function displayError(type) {
   switch(type) {
   case "db":
-    return "There was an error with our database. Please try again later";
+    return "There was an error with the database. Please try again later";
   }
-}
-
-function zeroFill(str) {
-  var n = Number(str);
-  if(n < 0) {
-    return "0" + str;
-  }
-  return str;
 }
 
 module.exports = function() {
@@ -39,18 +39,18 @@ module.exports = function() {
             res.send(displayError("db"));
             return;
           }
-          collection.find({ key: zeroFill(key) }, (err, docs) => {
+          collection.find({ key: negative_to_zero(key) }, { key: 0, _id: 0 }, (err, docs) => {
             if(err) {
               res.send(displayError("db"));
               return;
             }
             //url doesn't exist in db yet
             if(docs.length === 0) {
-              
+
               var url_pair = {
-                key: key,
+                key: negative_to_zero(key),
                 original_url: url,
-                short_url: "http://myproject.com/" + zeroFill(key)
+                short_url: "http://myproject.com/" + negative_to_zero(key)
               };
 
               collection.insert(url_pair, (err, result) => {
@@ -66,10 +66,7 @@ module.exports = function() {
             }
             //url already exist's in db
             else {
-              res.json({
-                original_url: docs[0].original_url,
-                short_url: docs[0].short_url
-              });
+              res.json(docs[0]);
             }
           });
         });
