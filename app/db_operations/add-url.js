@@ -1,4 +1,5 @@
 var mongodb = require("mongodb");
+var displayError = require("../display-error.js");
 
 var isValid = require("../validate-url.js");
 var hash = require("../hash-url.js");
@@ -9,13 +10,6 @@ function negative_to_zero(str) {
     return str.replace("-", "0");
   }
   return str;
-}
-
-function displayError(type) {
-  switch(type) {
-  case "db":
-    return "There was an error with the database. Please try again later";
-  }
 }
 
 module.exports = function() {
