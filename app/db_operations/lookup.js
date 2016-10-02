@@ -1,6 +1,8 @@
 var mongodb = require("mongodb");
 var displayError = require("../display-error.js");
 
+var default_url = "mongodb://localhost:27017/url-shortener";
+
 function checkHash(hash) {
   if(hash.charAt(0) === "0") {
     hash = hash.replace("0", "-");
@@ -16,19 +18,16 @@ module.exports = function() {
     var urlHash = req.params.urlHash;
 
     if(checkHash(urlHash)) {
-      var server = new mongodb.Server("localhost", 27017, { auto_reconnect: true });
-      var DB = new mongodb.Db("url-shortener", server);
 
-      DB.open((err, db) => {
+      mongodb.MongoClient.connect(process.env.MONGOLAB_URI || default_url, { auto_reconnect: true }, (err, db) => {
         if(err) {
-          res.send(displayError("db"));
-          db.close();
+          res.send(displayError("db", err));
           return;
         }
         db.collection("url-hashes", (err, collection) => {
           collection.find({ key: urlHash }, { key: 0, _id: 0 }).toArray((err, docs) => {
             if(err) {
-              res.send(displayError("db"));
+              res.send(displayError("db", err));
               db.close();
               return;
             }

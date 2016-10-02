@@ -4,6 +4,8 @@ var displayError = require("../display-error.js");
 var isValid = require("../validate-url.js");
 var hash = require("../hash-url.js");
 
+var default_url = "mongodb://localhost:27017/url-shortener";
+
 function negative_to_zero(str) {
   var n = Number(str);
   if(n < 0) {
@@ -20,24 +22,20 @@ module.exports = function() {
 
     if(isValid(url)) {
 
-      var server = new mongodb.Server("localhost", 27017, { auto_reconnect: true });
-      var DB = new mongodb.Db("url-shortener", server);
-
-      DB.open((err, db) => {
+      mongodb.MongoClient.connect(process.env.MONGOLAB_URI || default_url, { auto_reconnect: true }, (err, db) => {
         if(err) {
-          res.send(displayError("db"));
-          db.close();
+          res.send(displayError("db", err));
           return;
         }
         db.collection("url-hashes", (err, collection) => {
           if(err) {
-            res.send(displayError("db"));
+            res.send(displayError("db", err));
             db.close();
             return;
           }
           collection.find({ key: negative_to_zero(key) }, { key: 0, _id: 0 }).toArray((err, docs) => {
             if(err) {
-              res.send(displayError("db"));
+              res.send(displayError("db", err));
               db.close();
               return;
             }
@@ -47,12 +45,12 @@ module.exports = function() {
               var url_pair = {
                 key: negative_to_zero(key),
                 original_url: url,
-                short_url: "http://myproject.com/" + negative_to_zero(key)
+                short_url: "http://localhost:8080/" + negative_to_zero(key)
               };
 
               collection.insert(url_pair, (err, result) => {
                 if(err) {
-                  res.send(displayError("db"));
+                  res.send(displayError("db", err));
                   db.close();
                   return;
                 }

@@ -1,8 +1,9 @@
-module.exports = function(type) {
+module.exports = function(type, e) {
   switch(type) {
   case "db":
     return {
-      error: "Sorry there was an error with our database. Please try again later"
+      message: "Sorry there was an error with our database. Please try again later",
+      error: e
     };
   }
 };

@@ -23,12 +23,4 @@ app.use(_static(path.join(__dirname + "/public")));
 app.get("/new/:url(*)", add_url());
 app.get("/:urlHash", lookup());
 
-var server = http.createServer(app).listen(process.env.PORT || 8080, (err) => {
-  if(app.get("env") === "development") {
-    if(err) {
-      console.log(err);
-    } else {
-      console.log("Server listenin on port: " + server.address().port);
-    }
-  }
-});
+http.createServer(app).listen(process.env.PORT || 8080);
