@@ -26,16 +26,19 @@ module.exports = function() {
       DB.open((err, db) => {
         if(err) {
           res.send(displayError("db"));
+          db.close();
           return;
         }
         db.collection("url-hashes", (err, collection) => {
           if(err) {
             res.send(displayError("db"));
+            db.close();
             return;
           }
-          collection.find({ key: negative_to_zero(key) }, { key: 0, _id: 0 }, (err, docs) => {
+          collection.find({ key: negative_to_zero(key) }, { key: 0, _id: 0 }).toArray((err, docs) => {
             if(err) {
               res.send(displayError("db"));
+              db.close();
               return;
             }
             //url doesn't exist in db yet
@@ -50,17 +53,20 @@ module.exports = function() {
               collection.insert(url_pair, (err, result) => {
                 if(err) {
                   res.send(displayError("db"));
+                  db.close();
                   return;
                 }
                 res.json({
                   original_url: url_pair.original_url,
                   short_url: url_pair.short_url
                 });
+                db.close();
               });
             }
             //url already exist's in db
             else {
               res.json(docs[0]);
+              db.close();
             }
           });
         });

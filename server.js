@@ -4,7 +4,7 @@ var _static = require("serve-static");
 var favicon = require("express-favicon");
 
 var add_url = require("./app/db_operations/add-url.js");
-var redirect = require("./app/redirect.js");
+var lookup = require("./app/db_operations/lookup.js");
 
 var path = require("path");
 var http = require("http");
@@ -21,7 +21,7 @@ app.use(favicon(path.join(__dirname + "public/favicon.ico")));
 app.use(_static(path.join(__dirname + "/public")));
 
 app.get("/new/:url(*)", add_url());
-app.get("/:urlHash", redirect());
+app.get("/:urlHash", lookup());
 
 var server = http.createServer(app).listen(process.env.PORT || 8080, (err) => {
   if(app.get("env") === "development") {
