@@ -45,7 +45,7 @@ module.exports = function() {
               var url_pair = {
                 key: negative_to_zero(key),
                 original_url: url,
-                short_url: ("https://tiny-url.herokuapp.com/" + negative_to_zero(key)
+                short_url: "https://tiny-url.herokuapp.com/" + negative_to_zero(key)
               };
 
               collection.insert(url_pair, (err, result) => {
