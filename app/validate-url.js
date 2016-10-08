@@ -1,4 +1,7 @@
 module.exports = function(url) {
+  if(!url) {
+    return false;
+  }
   //parse_url from: Douglas Crockford - JavaScript The Good Parts
   var parse_url = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
   var result = parse_url.exec(url);
