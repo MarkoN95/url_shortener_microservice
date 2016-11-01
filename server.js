@@ -5,6 +5,7 @@ var favicon = require("express-favicon");
 
 var add_url = require("./app/db_operations/add-url.js");
 var lookup = require("./app/db_operations/lookup.js");
+var serveDefault = require("./app/serve-default.js");
 
 var path = require("path");
 var http = require("http");
@@ -22,5 +23,7 @@ app.use(_static(path.join(__dirname, "public")));
 
 app.get("/new/:url(*)", add_url());
 app.get("/:urlHash", lookup());
+
+app.use(serveDefault());
 
 http.createServer(app).listen(process.env.PORT || 8080);
