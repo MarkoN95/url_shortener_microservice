@@ -18,7 +18,7 @@
     "errorhandler": "^1.4.3",
     "express": "^4.14.0",
     "express-favicon": "^2.0.0",
-    "mongodb": "^2.2.10",
+    "mongodb": "^3.6.1",
     "serve-static": "^1.11.1"
   }
 }
